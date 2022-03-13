@@ -1,16 +1,14 @@
 package Server021221;
 
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  * This class handles server.Matrix-related tasks
  */
-public class MatrixIHandler implements IHandler {
+public class JsonHandler implements IHandler {
     private volatile boolean doWork = true;
 
     @Override
@@ -29,12 +27,13 @@ public class MatrixIHandler implements IHandler {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(toClient);
 
         boolean doWork = true;
-        // handle client's tasks
-        JSONObject jsonTransfered = (JSONObject) objectInputStream.readObject();
-        Scanner in = new Scanner(System.in);
-        System.out.println(jsonTransfered.toJSONString());
-
-
+        // handle client's tasks as long as doWork = true
+        while (doWork) {
+            JSONArray jsonTransferred = (JSONArray) objectInputStream.readObject();
+            Scanner in = new Scanner(System.in);
+            System.out.println(jsonTransferred.toJSONString()); // Prints Json to the console
+            doWork = false;
+        }
     }
 
 

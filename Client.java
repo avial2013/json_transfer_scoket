@@ -1,27 +1,38 @@
 package Server021221;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonToken;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Client {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Socket socket =new Socket("127.0.0.1",8010);
+    public static void main(String[] args) throws IOException, ClassNotFoundException, ParseException {
+        Socket socket = new Socket("127.0.0.1", 8010);
         System.out.println("client: Created Socket");
 
-        ObjectOutputStream toServer=new ObjectOutputStream(socket.getOutputStream());
-        ObjectInputStream fromServer=new ObjectInputStream(socket.getInputStream());
+        ObjectOutputStream toServer = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream fromServer = new ObjectInputStream(socket.getInputStream());
 
-        JSONObject json = new JSONObject();
-        json.put("name","avial");
-        toServer.writeObject(json);
+        InputStream inputStream = new FileInputStream(new File("JSONtest.json"));
 
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) jsonParser.parse(
+                new InputStreamReader(inputStream, "UTF-8"));
+
+//        System.out.println(jsonObject);
+
+        toServer.writeObject(jsonArray);
     }
 
 }
