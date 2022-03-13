@@ -24,14 +24,15 @@ public class Client {
         ObjectOutputStream toServer = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream fromServer = new ObjectInputStream(socket.getInputStream());
 
+        // Reads Json from file
         InputStream inputStream = new FileInputStream(new File("JSONtest.json"));
 
+        // Parses the InputStream to JsonArray (Object)
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = (JSONArray) jsonParser.parse(
                 new InputStreamReader(inputStream, "UTF-8"));
 
-//        System.out.println(jsonObject);
-
+        // send the Json to server (over stream)
         toServer.writeObject(jsonArray);
     }
 
