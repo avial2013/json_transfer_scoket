@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * This class handles server.Matrix-related tasks
+ * This class handles server.Json-related tasks
  */
 public class JsonHandler implements IHandler {
     private volatile boolean doWork = true;
